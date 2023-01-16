@@ -18,6 +18,5 @@ namespace kve {
 		static Texture* loadTexture(const char* imagePath);
 
 		static void clear();
-		~Assets();
 	};
 }

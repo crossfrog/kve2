@@ -1,7 +1,9 @@
 #include "Assets.h"
 #include <iostream>
 #include <fstream>
-#include <SDL2/SDL_image.h>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 using namespace kve;
 
@@ -78,20 +80,24 @@ Texture* Assets::loadTexture(const char* imagePath) {
 		glGenTextures(1, &texture->glTexture);
 		glBindTexture(GL_TEXTURE_2D, texture->glTexture);
 
-		SDL_Surface* imgSurface = IMG_Load(imagePath);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		if (!imgSurface) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		int width, height, channels;
+		unsigned char* pixels = stbi_load(imagePath, &width, &height, &channels, 0);
+
+		if (!pixels) {
 			std::cerr << "Image at path \"" << imagePath << "\" could not be loaded." << std::endl;
-			return nullptr;
+			return texture;
 		}
 
-		glTexImage2D(
-			GL_TEXTURE_2D, 0, 3,
-			imgSurface->w, imgSurface->h,
-			0, GL_RGB, GL_UNSIGNED_BYTE,
-			imgSurface->pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+		glGenerateMipmap(GL_TEXTURE_2D);
 
-		SDL_FreeSurface(imgSurface);
+		stbi_image_free(pixels);
 
 		textures.emplace(imagePath, texture);
 		return texture;
@@ -110,8 +116,4 @@ void Assets::clear() {
 	}
 
 	textures.clear();
-}
-
-Assets::~Assets() {
-	clear();
 }

@@ -1,10 +1,13 @@
 #include "Engine.h"
 #include <iostream>
+#include "Assets.h"
 
 using namespace kve;
 
 void Engine::end() {
 	game.end(*this);
+
+	Assets::clear();
 
 	SDL_GL_DeleteContext(glContext);
 	SDL_DestroyWindow(window);
@@ -33,6 +36,8 @@ void Engine::render() {
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	game.render(*this);
+
 	SDL_GL_SwapWindow(window);
 }
 
@@ -43,7 +48,7 @@ void Engine::start() {
 		"Test",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		640, 480,
+		1280, 720,
 		SDL_WINDOW_OPENGL);
 
 	if (!window) {
@@ -53,9 +58,10 @@ void Engine::start() {
 
 	glContext = SDL_GL_CreateContext(window);
 
-	if (glewInit() != GLEW_OK) {
-		std::cerr << "Failed to initialize GLEW." << std::endl;
-		return;
+	GLenum glewError = glewInit();
+
+	if (glewError != GLEW_OK) {
+		std::cerr << "Failed to initialize GLEW:\n" << glewGetErrorString(glewError) << std::endl;
 	}
 
 	game.start(*this);
@@ -70,9 +76,8 @@ void Engine::start() {
 			break;
 		}
 
-		lastTime = SDL_GetTicks();
-
-		SDL_Delay(std::max((1000 / 60) - (int)(currentTime - lastTime), 0));
+		SDL_Delay(std::max((1000 / 60) - (int)(SDL_GetTicks() - currentTime), 0));
+		lastTime = currentTime;
 	}
 
 	end();
