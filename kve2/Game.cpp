@@ -21,7 +21,7 @@ bool Game::update(Engine& engine, float delta) {
 }
 
 void Game::render(Engine& engine) {
-	const glm::vec2 sprites = glm::vec2(16.0f);
+	const glm::ivec2 sprites = glm::vec2(16);
 	const glm::vec2 spriteSize = glm::vec2(1.0f) / sprites;
 
 	for (int i = 0; i < sprites.y; i++) {
