@@ -8,25 +8,6 @@ void SpriteBatch::renderBatch(int spriteCount, Texture* texture) {
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteBatchVertex) * spriteCount * 4, vertices, GL_STATIC_DRAW);
-	
-	// Position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-		sizeof(SpriteBatchVertex),
-		(void*)offsetof(SpriteBatchVertex, position));
-
-	glEnableVertexAttribArray(0);
-
-	// UV
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
-		sizeof(SpriteBatchVertex),
-		(void*)offsetof(SpriteBatchVertex, uv));
-
-	glEnableVertexAttribArray(1);
-
-	// Color
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
-		sizeof(SpriteBatchVertex),
-		(void*)offsetof(SpriteBatchVertex, color));
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->getGlTexture());
@@ -113,6 +94,25 @@ void SpriteBatch::start() {
 	// Create vertex buffer
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+	// Position
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+		sizeof(SpriteBatchVertex),
+		(void*)offsetof(SpriteBatchVertex, position));
+
+	glEnableVertexAttribArray(0);
+
+	// UV
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
+		sizeof(SpriteBatchVertex),
+		(void*)offsetof(SpriteBatchVertex, uv));
+
+	glEnableVertexAttribArray(1);
+
+	// Color
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
+		sizeof(SpriteBatchVertex),
+		(void*)offsetof(SpriteBatchVertex, color));
 
 	glEnableVertexAttribArray(2);
 
