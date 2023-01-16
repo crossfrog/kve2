@@ -33,12 +33,14 @@ bool Engine::update(float delta) {
 }
 
 void Engine::render() {
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	game.render(*this);
 
 	SDL_GL_SwapWindow(window);
+}
+
+void Engine::renderClear(glm::vec4 color) {
+	glClearColor(color.r, color.g, color.b, color.a);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Engine::start() {

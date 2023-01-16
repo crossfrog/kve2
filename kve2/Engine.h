@@ -17,6 +17,8 @@ namespace kve {
 	public:
 		Game game;
 
+		void renderClear(glm::vec4 color);
+
 		void start();
 	};
 }
