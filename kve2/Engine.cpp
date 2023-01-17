@@ -5,7 +5,7 @@
 using namespace kve;
 
 void Engine::end() {
-	game.end(*this);
+	game.end();
 
 	Assets::clear();
 
@@ -24,7 +24,7 @@ bool Engine::update(float delta) {
 		}
 	}
 
-	if (!game.update(*this, delta)) {
+	if (!game.update(delta)) {
 		return false;
 	}
 
@@ -33,7 +33,7 @@ bool Engine::update(float delta) {
 }
 
 void Engine::render() {
-	game.render(*this);
+	game.render();
 
 	SDL_GL_SwapWindow(window);
 }
@@ -66,7 +66,7 @@ void Engine::start() {
 		std::cerr << "Failed to initialize GLEW:\n" << glewGetErrorString(glewError) << std::endl;
 	}
 
-	game.start(*this);
+	game.start(this);
 
 	while (true) {
 		static Uint32 lastTime = 0;

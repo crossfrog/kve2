@@ -5,23 +5,25 @@
 
 using namespace kve;
 
-void Game::start(Engine& engine) {
+void Game::start(Engine* engine) {
+	this->engine = engine;
+	
 	texture1 = Assets::loadTexture("assets/textures/test.png");
 	texture2 = Assets::loadTexture("assets/textures/test2.png");
 
 	spriteBatch.start();
 }
 
-void Game::end(Engine& engine) {
+void Game::end() {
 }
 
-bool Game::update(Engine& engine, float delta) {
+bool Game::update(float delta) {
 	std::cout << delta << std::endl;
 	return true;
 }
 
-void Game::render(Engine& engine) {
-	engine.renderClear({ 0.2f, 0.2f, 0.2f, 1.0f });
+void Game::render() {
+	engine->renderClear({ 0.2f, 0.2f, 0.2f, 1.0f });
 
 	const glm::ivec2 sprites = glm::ivec2(16);
 	const glm::vec2 spriteSize = glm::vec2(1.0f) / (glm::vec2)sprites;
