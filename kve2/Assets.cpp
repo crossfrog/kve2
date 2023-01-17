@@ -10,7 +10,7 @@ using namespace kve;
 int Assets::glSuccess;
 char Assets::glInfoLog[512];
 
-std::map<std::string, Texture*> Assets::textures;
+std::unordered_map<std::string, Texture*> Assets::textures;
 
 GLuint Assets::loadShader(const char* sourcePath, uint16_t type) {
 	GLuint shader = glCreateShader(type);

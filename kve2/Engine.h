@@ -7,18 +7,18 @@
 namespace kve {
 	class Engine {
 	private:
-		SDL_Window* window = nullptr;
-		SDL_GLContext glContext;
+		static SDL_Window* window;
+		static SDL_GLContext glContext;
 
-		void end();
-		bool update(float delta);
-		void render();
+		static void end();
+		static bool update(float delta);
+		static void render();
 
 	public:
-		Game game;
+		static Game game;
 
-		void renderClear(glm::vec4 color);
+		static void renderClear(glm::vec4 color);
 
-		void start();
+		static void start();
 	};
 }

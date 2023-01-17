@@ -2,8 +2,6 @@
 #include "Engine.h"
 
 int main() {
-	kve::Engine engine{};
-	engine.start();
-
+	kve::Engine::start();
 	return 0;
 }

@@ -2,28 +2,32 @@
 #include <iostream>
 #include "Engine.h"
 #include "Assets.h"
+#include "Input.h"
 
 using namespace kve;
 
-void Game::start(Engine* engine) {
-	this->engine = engine;
-	
+void Game::start() {
 	texture1 = Assets::loadTexture("assets/textures/test.png");
 	texture2 = Assets::loadTexture("assets/textures/test2.png");
 
 	spriteBatch.start();
+
+	Input::addKeyAction(SDLK_SPACE, InputAction::A);
+	Input::addKeyAction(SDLK_a, InputAction::A);
 }
 
-void Game::end() {
-}
+void Game::end() {}
 
 bool Game::update(float delta) {
-	std::cout << delta << std::endl;
+	if (Input::isActionJustPressed(InputAction::A)) {
+		std::cout << "pressed" << std::endl;
+	}
+
 	return true;
 }
 
 void Game::render() {
-	engine->renderClear({ 0.2f, 0.2f, 0.2f, 1.0f });
+	Engine::renderClear({ 0.2f, 0.2f, 0.2f, 1.0f });
 
 	const glm::ivec2 sprites = glm::ivec2(16);
 	const glm::vec2 spriteSize = glm::vec2(1.0f) / (glm::vec2)sprites;

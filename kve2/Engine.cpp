@@ -1,8 +1,14 @@
 #include "Engine.h"
 #include <iostream>
 #include "Assets.h"
+#include "Input.h"
 
 using namespace kve;
+
+SDL_Window* Engine::window = nullptr;
+SDL_GLContext Engine::glContext;
+
+Game Engine::game;
 
 void Engine::end() {
 	game.end();
@@ -21,12 +27,22 @@ bool Engine::update(float delta) {
 		switch (event.type) {
 		case SDL_QUIT:
 			return false;
+
+		case SDL_KEYDOWN:
+			Input::processKeyDown(event);
+			break;
+
+		case SDL_KEYUP:
+			Input::processKeyUp(event);
+			break;
 		}
 	}
 
 	if (!game.update(delta)) {
 		return false;
 	}
+
+	Input::update();
 
 	render();
 	return true;
@@ -50,7 +66,7 @@ void Engine::start() {
 		"Test",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		1280, 720,
+		640, 480,
 		SDL_WINDOW_OPENGL);
 
 	if (!window) {
@@ -66,7 +82,7 @@ void Engine::start() {
 		std::cerr << "Failed to initialize GLEW:\n" << glewGetErrorString(glewError) << std::endl;
 	}
 
-	game.start(this);
+	game.start();
 
 	while (true) {
 		static Uint32 lastTime = 0;

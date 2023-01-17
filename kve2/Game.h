@@ -6,14 +6,12 @@ namespace kve {
 
 	class Game {
 	private:
-		Engine* engine;
-
 		SpriteBatch spriteBatch;
 		Texture* texture1;
 		Texture* texture2;
 
 	public:
-		void start(Engine* engine);
+		void start();
 		void end();
 		bool update(float delta);
 		void render();
