@@ -1,19 +1,13 @@
 #include "Engine.h"
 #include <iostream>
 #include "Assets.h"
-#include "Input.h"
 
 using namespace kve;
 
-SDL_Window* Engine::window = nullptr;
-SDL_GLContext Engine::glContext;
-
-Game Engine::game;
-
 void Engine::end() {
-	game.end();
-
 	Assets::clear();
+
+	endEvent.invoke();
 
 	SDL_GL_DeleteContext(glContext);
 	SDL_DestroyWindow(window);
@@ -21,7 +15,7 @@ void Engine::end() {
 }
 
 bool Engine::update(float delta) {
-	static SDL_Event event;
+	SDL_Event event;
 
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -29,27 +23,23 @@ bool Engine::update(float delta) {
 			return false;
 
 		case SDL_KEYDOWN:
-			Input::processKeyDown(event);
+			keyDownEvent.invoke(event);
 			break;
 
 		case SDL_KEYUP:
-			Input::processKeyUp(event);
+			keyUpEvent.invoke(event);
 			break;
 		}
 	}
 
-	if (!game.update(delta)) {
-		return false;
-	}
-
-	Input::update();
+	updateEvent.invoke(delta);
 
 	render();
 	return true;
 }
 
 void Engine::render() {
-	game.render();
+	renderEvent.invoke();
 
 	SDL_GL_SwapWindow(window);
 }
@@ -82,10 +72,10 @@ void Engine::start() {
 		std::cerr << "Failed to initialize GLEW:\n" << glewGetErrorString(glewError) << std::endl;
 	}
 
-	game.start();
+	startEvent.invoke();
 
 	while (true) {
-		static Uint32 lastTime = 0;
+		Uint32 lastTime = 0;
 		
 		Uint32 currentTime = SDL_GetTicks();
 		Uint32 delta = currentTime - lastTime;

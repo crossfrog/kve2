@@ -1,19 +1,22 @@
 #pragma once
-#include "SpriteBatch.h"
+#include "Engine.h"
 
 namespace kve {
-	class Engine;
-
 	class Game {
 	private:
-		SpriteBatch spriteBatch;
-		Texture* texture1;
-		Texture* texture2;
+		EventHandler<>* startEvent, *endEvent, *renderEvent;
+		EventHandler<float>* updateEvent;
+
+	protected:
+		Engine* engine;
 
 	public:
-		void start();
-		void end();
-		bool update(float delta);
-		void render();
+		virtual void start() {}
+		virtual void end() {}
+		virtual void update(float delta) {}
+		virtual void render() {}
+
+		Game(Engine& engine);
+		~Game();
 	};
 }

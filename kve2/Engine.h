@@ -2,23 +2,26 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-#include "Game.h"
+#include "glm/glm.hpp"
+#include "Event.h"
 
 namespace kve {
 	class Engine {
 	private:
-		static SDL_Window* window;
-		static SDL_GLContext glContext;
+		SDL_Window* window;
+		SDL_GLContext glContext;
 
-		static void end();
-		static bool update(float delta);
-		static void render();
+		void end();
+		bool update(float delta);
+		void render();
 
 	public:
-		static Game game;
+		Event<> startEvent, endEvent, renderEvent;
+		Event<float> updateEvent;
+		Event<SDL_Event&> keyDownEvent, keyUpEvent;
 
-		static void renderClear(glm::vec4 color);
+		void renderClear(glm::vec4 color);
 
-		static void start();
+		void start();
 	};
 }

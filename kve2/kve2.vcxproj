@@ -129,15 +129,17 @@
   <ItemGroup>
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="BuildGame.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets.h" />
+    <ClInclude Include="BuildGame.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Rect2.h" />

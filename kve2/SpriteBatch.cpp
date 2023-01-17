@@ -48,10 +48,11 @@ void SpriteBatch::endBatch() {
 
 		int startVertex = spriteCount * 4;
 
-		SpriteBatchVertex* vertex1 = &vertices[startVertex + 0];
-		SpriteBatchVertex* vertex2 = &vertices[startVertex + 1];
-		SpriteBatchVertex* vertex3 = &vertices[startVertex + 2];
-		SpriteBatchVertex* vertex4 = &vertices[startVertex + 3];
+		SpriteBatchVertex
+			*vertex1 = &vertices[startVertex + 0],
+			*vertex2 = &vertices[startVertex + 1],
+			*vertex3 = &vertices[startVertex + 2], 
+			*vertex4 = &vertices[startVertex + 3];
 
 		glm::vec2 start = batchedSprite.rect.position;
 		glm::vec2 end = start + batchedSprite.rect.size;
