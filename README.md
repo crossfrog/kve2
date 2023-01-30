@@ -5,5 +5,4 @@ Kerovoid Engine 2, a C++ game engine.
  - SDL
  - GLEW
  - glm
- - rapidxml
  - stb
